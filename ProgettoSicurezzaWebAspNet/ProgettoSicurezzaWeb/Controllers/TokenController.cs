@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ProgettoSicurezzaWeb.Controllers
 {
-    //[CustomAutorized]
+    
     public class TokenController : ApiController
     {
         public UserManager<ApplicationUser> UserManager { get; private set; }

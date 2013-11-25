@@ -8,9 +8,10 @@ using System.Web.Http;
 
 namespace ProgettoSicurezzaWeb.Controllers
 {
+    [CustomAutorized]
     public class CartController : ApiController
     {
-        [CustomAutorized]
+        
         /// <summary>
         /// api/cart
         /// </summary>

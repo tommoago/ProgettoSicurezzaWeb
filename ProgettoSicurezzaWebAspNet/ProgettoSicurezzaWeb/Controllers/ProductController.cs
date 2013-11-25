@@ -8,51 +8,24 @@ using System.Web.Http;
 
 namespace ProgettoSicurezzaWeb.Controllers
 {
+    [CustomAutorized]
     public class ProductController : ApiController
     {
+        DataAccess data;
+
+
+        public ProductController()
+        {
+            data = new DataAccess();
+        }
         /// <summary>
         /// api/product
         /// </summary>
         /// <returns>lista prodotti</returns>
         public IEnumerable<Product> Get()
         {
-            List<Product> prods = new List<Product>();
-            prods.Add(new Product
-            {
-                Id = 1,
-                Nome = "nome1",
-                Descrizione = "desc1",
-            });
 
-            prods.Add(new Product
-            {
-                Id = 2,
-                Nome = "nome2",
-                Descrizione = "desc2",
-            });
-
-            prods.Add(new Product
-            {
-                Id = 3,
-                Nome = "nome3",
-                Descrizione = "desc3",
-            });
-
-            prods.Add(new Product
-            {
-                Id = 4,
-                Nome = "nome4",
-                Descrizione = "desc4",
-            });
-
-            prods.Add(new Product
-            {
-                Id = 5,
-                Nome = "nome5",
-                Descrizione = "desc5",
-            });
-
-            return prods;
+            return data.GetAllProducts();
         }
 
         /// <summary>
@@ -62,12 +35,8 @@ namespace ProgettoSicurezzaWeb.Controllers
         /// <returns>prodotto</returns>
         public Product Get(int id)
         {
-            return new Product{
-                Id=id,
-                Nome="nome"+id,
-                Descrizione="desc"+id
-            };
-           
+            return data.GetProductById(id);
+
         }
 
 

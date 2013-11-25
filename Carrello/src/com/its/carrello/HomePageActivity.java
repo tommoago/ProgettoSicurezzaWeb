@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 public class HomePageActivity extends Activity {
 	EditText mEdtUsername, mEdtPassword;
+	private static String mToken;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,18 +53,16 @@ public class HomePageActivity extends Activity {
 		});
 	}
 	
-	
-	//TODO autentificazione
 	private boolean logIn() {
 		String vUserName =  mEdtUsername.getText().toString();
 		String vPassword =  mEdtPassword.getText().toString();
-		String vURL = "http://www.google.com";
+		String vURL = "http://localhost/ProgettoSicurezzWeb/token?username=%s&password=%s";
 		
 		AsyncHttpClient client = new AsyncHttpClient();
-		client.get( vURL, new AsyncHttpResponseHandler() {
-		    @Override
+		client.post( String.format( vURL, vUserName, vPassword ), new AsyncHttpResponseHandler() {
+			@Override
 		    public void onSuccess(String response) {
-		        System.out.println(response);
+		        mToken = response;
 		    }
 		});
 		
@@ -74,6 +74,11 @@ public class HomePageActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home_page, menu);
 		return true;
+	}
+	
+	public static String getToken( )
+	{
+		return mToken;
 	}
 
 }

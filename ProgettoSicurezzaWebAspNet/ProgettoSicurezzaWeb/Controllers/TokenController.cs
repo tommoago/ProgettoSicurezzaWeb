@@ -46,5 +46,10 @@ namespace ProgettoSicurezzaWeb.Controllers
 
             return result;
         }
+
+        public string Options()
+        {
+            return "";
+        }
     }
 }

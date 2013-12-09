@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace ProgettoSicurezzaWeb.Controllers
 {
-    [CustomAutorized]
+
     public class ProductController : ApiController
     {
         DataAccess data;
@@ -22,6 +22,7 @@ namespace ProgettoSicurezzaWeb.Controllers
         /// api/product
         /// </summary>
         /// <returns>lista prodotti</returns>
+        [CustomAutorized]
         public IEnumerable<Product> Get()
         {
 
@@ -33,10 +34,16 @@ namespace ProgettoSicurezzaWeb.Controllers
         /// </summary>
         /// <param name="id">id del prodotto</param>
         /// <returns>prodotto</returns>
+        [CustomAutorized]
         public Product Get(int id)
         {
             return data.GetProductById(id);
 
+        }
+
+        public string Options()
+        {
+            return "";
         }
 
 

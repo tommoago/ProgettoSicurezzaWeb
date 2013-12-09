@@ -80,7 +80,7 @@ WHERE Id = @id";
                     {
                         if (reader.Read())
                         {
-                           Product product = new Product();
+                            Product product = new Product();
                             product.Id = reader.GetInt32(reader.GetOrdinal("Id"));
                             product.Nome = reader.GetString(reader.GetOrdinal("Nome"));
                             product.Descrizione = reader.GetString(reader.GetOrdinal("Descrizione"));
@@ -175,5 +175,69 @@ WHERE Id_prodotto = @id";
         }
 
 
+
+
+        public void InsertProduct(ProductCart p)
+        {
+
+            if (GetCartProduct(p.Id_Prodotto) == null)
+            {
+                string query = @"
+INSERT INTO [dbo].[Cart] ([Id_prodotto]
+      ,[Qta])
+VALUES (@id, @qta);";
+                using (SqlConnection connection = new SqlConnection(this.connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("id", p.Id_Prodotto));
+                        command.Parameters.Add(new SqlParameter("qta", p.Qta));
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            else
+            {
+
+                string query = @"
+UPDATE [dbo].[Cart]
+   SET [Qta] = @Qta
+ WHERE Id_Prodotto = @Id_Prodotto
+";
+                using (SqlConnection connection = new SqlConnection(this.connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("Id_Prodotto", p.Id_Prodotto));
+                        command.Parameters.Add(new SqlParameter("Qta", p.Qta));
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+
+
+
+        public void DeleteByCart(ProductCart p)
+        {
+            string query = @"
+DELETE FROM [dbo].[Cart] 
+WHERE Id_Prodotto=@Id;";
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add(new SqlParameter("id", p.Id_Prodotto));
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
